@@ -1013,7 +1013,7 @@ def information_binding(X, base=2, fill_value=-1, estimator='ML',
     Alphabet_X = np.reshape(Alphabet_X, (-1, Alphabet_X.shape[-1]))
     M = np.arange(X.shape[0])
 
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         B -= H_joint
         if X.shape[0] > 1:
             B += entropy_joint(X[M != i], base, fill_value, estimator,
@@ -1385,7 +1385,7 @@ def information_mutual_conditional(X, Y, Z, cartesian_product=False, base=2,
         Z = np.reshape(Z, (-1, Z.shape[-1]))
         Alphabet_Z = np.reshape(Alphabet_Z, (-1, Alphabet_Z.shape[-1]))
         I = []
-        for i in xrange(Z.shape[0]):
+        for i in range(Z.shape[0]):
             def f(X, Y, Alphabet_X, Alphabet_Y):
                 return information_mutual_conditional(X, Y, Z[i], False, base,
                                                       fill_value, estimator,
@@ -1412,7 +1412,7 @@ def information_mutual_conditional(X, Y, Z, cartesian_product=False, base=2,
     orig_shape_I = I.shape
     I = np.reshape(I, (-1, 1))
 
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         I_ = (entropy_joint(np.vstack((X[i], Z[i])), base, fill_value,
                             estimator,
                             _vstack_pad((Alphabet_X[i],
@@ -1674,7 +1674,7 @@ def information_lautum(X, Y=None, cartesian_product=False, base=2,
     _verify_alphabet_sufficiently_large(X, Alphabet_X, fill_value)
     _verify_alphabet_sufficiently_large(Y, Alphabet_Y, fill_value)
 
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         # Sort X and Y jointly, so that we can determine joint symbol
         # probabilities
         JointXY = np.vstack((X[i], Y[i]))
@@ -1712,7 +1712,7 @@ def information_lautum(X, Y=None, cartesian_product=False, base=2,
         alphabet_Y = np.unique(alphabet_XY[1])
         P_XY_reshaped = np.zeros((alphabet_Y.size, alphabet_X.size))
         j = k = c = 0
-        for c in xrange(P_XY.size):
+        for c in range(P_XY.size):
             if c > 0 and alphabet_XY[1, c] != alphabet_XY[1, c-1]:
                 k = 0
             while alphabet_X[k] != alphabet_XY[0, c]:
@@ -2056,7 +2056,7 @@ def information_mutual_normalised(X, Y=None, norm_factor='Y',
             orig_shape_H = H.shape
             H = np.reshape(H, (-1, 1))
 
-            for i in xrange(X.shape[0]):
+            for i in range(X.shape[0]):
                 H[i] = entropy_joint(np.vstack((X[i], Y[i])),
                                      fill_value=fill_value,
                                      estimator=estimator,
@@ -2637,7 +2637,7 @@ def entropy_cross(X, Y=None, cartesian_product=False, base=2, fill_value=-1,
     # Compute symbol change indicators
     B = X[:, 1:] != X[:, :-1]
     C = Y[:, 1:] != Y[:, :-1]
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         # Obtain symbol change positions
         I = np.append(np.where(B[i]), X.shape[1]-1)
         # Compute run lengths
@@ -3067,7 +3067,7 @@ def divergence_jensenshannon(X, Y=None, cartesian_product=False, base=2,
     # Compute symbol change indicators
     B = X[:, 1:] != X[:, :-1]
     C = Y[:, 1:] != Y[:, :-1]
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         # Obtain symbol change positions
         I = np.append(np.where(B[i]), X.shape[1]-1)
         # Compute run lengths
@@ -3509,7 +3509,7 @@ def entropy_conditional(X, Y=None, cartesian_product=False, base=2,
     orig_shape_H = H.shape
     H = np.reshape(H, (-1, 1))
 
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         H[i] = entropy_joint(np.vstack((X[i], Y[i])), base, fill_value,
                              estimator, _vstack_pad((Alphabet_X[i],
                                                      Alphabet_Y[i]),
@@ -3674,7 +3674,7 @@ def entropy_joint(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
     _verify_alphabet_sufficiently_large(X, Alphabet_X, fill_value)
 
     # Sort columns
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         X = X[:, X[i].argsort(kind='mergesort')]
 
     # Compute symbol run-lengths
@@ -3860,7 +3860,7 @@ def entropy(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
     # Compute symbol run-lengths
     # Compute symbol change indicators
     B = X[:, 1:] != X[:, :-1]
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         # Obtain symbol change positions
         I = np.append(np.where(B[i]), X.shape[1]-1)
         # Compute run lengths
@@ -4354,8 +4354,8 @@ def _append_empty_bins_using_alphabet(Counts, Alphabet, Full_Alphabet,
         Alph2 = np.unique(Full_Alphabet[1, Full_Alphabet[1] != fill_value])
         A = np.zeros((2, Alph1.size*Alph2.size), dtype=Full_Alphabet.dtype)
         c = 0
-        for j in xrange(Alph2.size):
-            for i in xrange(Alph1.size):
+        for j in range(Alph2.size):
+            for i in range(Alph1.size):
                 A[0, c] = Alph1[i]
                 A[1, c] = Alph2[j]
                 c = c + 1
@@ -4373,7 +4373,7 @@ def _append_empty_bins_using_alphabet(Counts, Alphabet, Full_Alphabet,
         Alphabet = np.hstack((Alphabet, A[:, Unseen]))
         Counts = np.append(Counts, np.tile(0, Alphabet.size-Counts.size))
         # Sort columns
-        for i in xrange(Alphabet.shape[0]):
+        for i in range(Alphabet.shape[0]):
             I = Alphabet[i].argsort(kind='mergesort')
             Alphabet = Alphabet[:, I]
             Counts = Counts[I]
@@ -4446,8 +4446,8 @@ def _cartesian_product_apply(X, Y, function, Alphabet_X=None, Alphabet_Y=None):
     H = np.reshape(H, (-1, 1))
 
     n = 0
-    for i in xrange(X.shape[0]):
-        for j in xrange(Y.shape[0]):
+    for i in range(X.shape[0]):
+        for j in range(Y.shape[0]):
             if Alphabet_X is not None or Alphabet_Y is not None:
                 H[n] = function(X[i], Y[j], Alphabet_X[i], Alphabet_Y[j])
             else:
@@ -4638,7 +4638,7 @@ def _increment_binary_vector(X):
     if not x:
         carry_1 = True
     X[0] = x
-    for i in xrange(1, X.size):
+    for i in range(1, X.size):
         x = X[i] ^ carry_1
         if not X[i] and x:
             carry_1 = False
@@ -4741,7 +4741,7 @@ def _sanitise_array_input(X, fill_value=-1):
 def _verify_alphabet_sufficiently_large(X, Alphabet, fill_value):
     assert(not np.any(X == np.array(None)))
     assert(not np.any(Alphabet == np.array(None)))
-    for i in xrange(X.shape[0]):
+    for i in range(X.shape[0]):
         I = X[i] != fill_value
         J = Alphabet[i] != fill_value
         # NB: This causes issues when both arguments contain None. But it is
