@@ -226,10 +226,10 @@ class TestEntropy(unittest.TestCase):
         Locs = Locs.reshape((8,8,-1))
         H1_empirical = discrete.divergence_kullbackleibler_pmf(P1 / np.sum(P1,axis=-1)[:,:,np.newaxis], P2 / np.sum(P2,axis=-1)[:,:,np.newaxis], cartesian_product=True, base=np.exp(1))        
         self.assertTrue(np.all(H1_empirical.shape == (8,8,8,8)))
-        for i in xrange(H1_empirical.shape[0]):
-            for j in xrange(H1_empirical.shape[1]):
-                for k in xrange(H1_empirical.shape[2]):
-                   for l in xrange(H1_empirical.shape[3]):
+        for i in range(H1_empirical.shape[0]):
+            for j in range(H1_empirical.shape[1]):
+                for k in range(H1_empirical.shape[2]):
+                   for l in range(H1_empirical.shape[3]):
                        H1 = (1 + (Locs[i,j]-Locs[k,l])**2)/2 - 0.5
                        self.assertTrue(np.abs(H1 - H1_empirical[i,j,k,l]) < 1E-3)
                        
@@ -2833,7 +2833,7 @@ class TestEntropy(unittest.TestCase):
         N_r = N_r.tolist()
         Counts = []
         for r, n_r in N_r:
-            for i in xrange(n_r):
+            for i in range(n_r):
                 Counts.append(r)
         Counts = np.array(Counts)
         P = discrete._estimate_probabilities(Counts, 'good-turing',1)[0]
